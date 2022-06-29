@@ -1,1 +1,5 @@
 schedule.txt
+*.exe
+.vscode
+.vs
+template.*
