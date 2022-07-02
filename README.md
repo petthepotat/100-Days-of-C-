@@ -10,3 +10,10 @@ Each day is located within the `100 days of C++` folder
 - to compile, watch videos
 - general layout
   - `g++ |file| -o run.exe -I.`
+
+# Wondering why this is a thing?
+
+![Repo Languages](https://github.com/petthepotat/100-Days-of-C-/tree/main/assets/languages.png)
+
+Don't worry about it :)
+I blame the `stb_image.h` header file.
