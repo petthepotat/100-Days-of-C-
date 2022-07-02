@@ -9,4 +9,4 @@ Each day is located within the `100 days of C++` folder
 
 - to compile, watch videos
 - general layout
-  - `g++ |file| -o run.exe -I.
+  - `g++ |file| -o run.exe -I.`
