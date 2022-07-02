@@ -1,6 +1,6 @@
 /*
-    Day 7 of C++ (but today is C)
-    - hello world
+    Day 7
+    - Hello world in c++
 */
 
 #include <stdio.h>
