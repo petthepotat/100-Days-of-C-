@@ -1,9 +1,12 @@
 /*
-    Day 11
+    Day 11-20
     - making an SDL window
 */
 
 #include <SDL2/SDL.h>
+// SDL image must be installed
+// too lazy to show how, but files are located in include
+#include <SDL2/SDL_image.h>
 #include <stdio.h>
 
 const int WIDTH = 1280, HEIGHT = 720;
@@ -38,18 +41,46 @@ int main(int argc, char *args[])
     if (!renderer)
     {
         printf("Failed to create renderer!!!\n");
+        SDL_DestroyWindow(window);
+        return 1;
+    }
+
+    // init sdl image
+    if (!IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG))
+    {
+        printf("Failed to load SDL image!\n");
+        SDL_DestroyRenderer(renderer);
+        SDL_DestroyWindow(window);
+        SDL_Quit();
         return 1;
     }
 
     // ----------------- day 12 -------------- //
-    SDL_Rect _1x1_size = {0, 0, 1, 1};
-    SDL_Surface *player_image = SDL_CreateRGBSurface(0, 1, 1, 32, 0, 0, 0, 0);
-    SDL_FillRect(player_image, &_1x1_size, SDL_MapRGB(player_image->format, 255, 0, 0));
+    // SDL_Rect _1x1_size = {0, 0, 1, 1};
+    // SDL_Surface *player_image = SDL_CreateRGBSurface(0, 1, 1, 32, 0, 0, 0, 0);
+    // SDL_FillRect(player_image, &_1x1_size, SDL_MapRGB(player_image->format, 255, 0, 0));
 
-    SDL_Texture *player = SDL_CreateTextureFromSurface(renderer, player_image);
+    // SDL_Texture *player = SDL_CreateTextureFromSurface(renderer, player_image);
     SDL_Rect pos = {0, 0, 100, 100};
 
-    // ---------------- end ----------------- //
+    // ---------------- day 13 ----------------- //
+
+    SDL_Rect image_rect;
+    SDL_Texture *image = IMG_LoadTexture(renderer, "assets/techno.png");
+    if (!image)
+    {
+        printf("Failed to load image!\n");
+        SDL_DestroyWindow(window);
+        SDL_DestroyRenderer(renderer);
+        IMG_Quit();
+        SDL_Quit();
+        return -1;
+    }
+    SDL_QueryTexture(image, NULL, NULL, &image_rect.w, &image_rect.h);
+    image_rect.x = 0;
+    image_rect.y = 0;
+
+    // ----------------------------------------- //
 
     SDL_Event event;
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
@@ -57,7 +88,7 @@ int main(int argc, char *args[])
     {
         SDL_RenderClear(renderer);
 
-        SDL_RenderCopy(renderer, player, &_1x1_size, &pos);
+        SDL_RenderCopy(renderer, image, &image_rect, &pos);
 
         while (SDL_PollEvent(&event))
         {
@@ -90,8 +121,13 @@ int main(int argc, char *args[])
         SDL_Delay(FRAME_TIME);
     }
 
+    SDL_DestroyTexture(image);
+
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
+
+    IMG_Quit();
+    SDL_Quit();
 
     return 0;
 }
